@@ -1,0 +1,1 @@
+![Tech Stack Diagram](./images/esbot.architecture.png)
