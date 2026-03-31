@@ -1,10 +1,19 @@
 # Use Cases
+## Verzeichnis
+[User Register in ESBot App (UC-001)](#use-case-uc-001)
+[Login into ESBot Account (UC-002)](#use-case-uc-002)  
+[Chat with ESBot (UC-003)](#use-case-uc-003)  
+[Retrieve Old Chats (UC-004)](#use-case-uc-004)  
+[Configure ESBot (UC-005)](#use-case-uc-005)  
+[Managing and Maintaining Software (UC-006)](#use-case-uc-006)  
+[Retrieving Logs and Status (UC-007)](#use-case-uc-007)  
+
 ## Use Case Diagram
 ![Use Case Diagram](../../assets/UseCases.png)
 
 ## Use Case UC-001
-Use Case ID: UC-001  
-Title: User Register in EsBot App
+Use Case ID: UC-001    
+Title: User Register in ESBot App  
 Primary Actor: User  
 Stakeholders and Interests:
   - User: Wants to create an Account to save progress and access chat history
@@ -43,8 +52,8 @@ Frequency of Use:
   - Low frequency after
 
 ## Use Case UC-002
-Use Case ID: UC-002
-Title: Login into EsBot Account
+Use Case ID: UC-002  
+Title: Login into ESBot Account  
 Primary Actor: User  
 Stakeholders and Interests:
   - User: Wants secure access to their personal chat data and features
@@ -128,8 +137,8 @@ Frequency of Use:
   - High frequency (daily use by multiple students)
 
 ## Use Case UC-004
-Use Case ID: UC-004
-Title: Retrieve Old Chats
+Use Case ID: UC-004  
+Title: Retrieve Old Chats  
 Primary Actor: User  
 Stakeholders and Interests:
   - User: Wants to review past learning materials and previous AI answers
@@ -166,7 +175,7 @@ Frequency of Use:
 
 ## Use Case UC-005
 Use Case ID: UC-005  
-Title: Configure EsBot
+Title: Configure ESBot  
 Primary Actor: Admin  
 Stakeholders and Interests:
   - Admin: Wants the AI to stay aligned with course goals
@@ -201,8 +210,8 @@ Frequency of Use:
   - Low frequency
 
 ## Use Case UC-006
-Use Case ID: UC-006 
-Title: Managing and Maintaining Software
+Use Case ID: UC-006  
+Title: Managing and Maintaining Software  
 Primary Actor: Admin  
 Stakeholders and Interests:
   - Admin: Wants to ensure the platform remains stable, updated, and secure
@@ -227,8 +236,8 @@ Frequency of Use:
   - Medium frequency
 
 ## Use Case UC-007
-Use Case ID: UC-007
-Title: Retrieving Logs and Status
+Use Case ID: UC-007  
+Title: Retrieving Logs and Status  
 Primary Actor: Admin  
 Stakeholders and Interests:
   - Admin: Needs to monitor system health and troubleshoot errors
