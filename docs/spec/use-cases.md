@@ -1,5 +1,6 @@
 # Use Cases
 ## Table of Contents
+[Use Case Diagram](#use-case-diagram)  
 [User Register in ESBot App (UC-001)](#use-case-uc-001)  
 [Login into ESBot Account (UC-002)](#use-case-uc-002)  
 [Chat with ESBot (UC-003)](#use-case-uc-003)  
