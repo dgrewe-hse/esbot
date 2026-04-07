@@ -1,10 +1,10 @@
 # UX to ISO 25010 Mapping
 ## Table of Contents
-[Clarity and Comprehensibility](#clarity-and-comprehensibility)  
-[Feedback Quality](#feedback-quality)  
-[Trust and Transparency](#trust-and-transparency)  
-[Learnability (of the tool)](#learnability-of-the-tool)  
-[Error Tolerance and Recovery](#error-tolerance-and-recovery)  
+[Clarity and Comprehensibility](#1-clarity-and-comprehensibility)  
+[Feedback Quality](#2-feedback-quality)  
+[Trust and Transparency](#3-trust-and-transparency)  
+[Learnability (of the tool)](#4-learnability-of-the-tool)  
+[Error Tolerance and Recovery](#5-error-tolerance-and-recovery)  
 
 ## 1. Clarity and Comprehensibility
 ### ISO 25010 Mapping
