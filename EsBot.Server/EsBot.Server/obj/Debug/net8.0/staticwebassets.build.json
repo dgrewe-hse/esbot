@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "7X1i8jMpt44TqQ3BTlappJ2MfLKMALuIX9QLmiRX0Hs=",
+  "Source": "Server.EsBot",
+  "BasePath": "_content/Server.EsBot",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
