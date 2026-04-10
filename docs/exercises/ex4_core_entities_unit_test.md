@@ -39,7 +39,7 @@ After completing this exercise, you should be able to:
 
 You need to have access and/or installed the following tools:
 
-* Backend technology of your tech stack decision from Exercise 1 (e.g., Java Spring Boot, Node.js Express, etc.) 
+* Backend technology of your tech stack decision from Exercise 1 (e.g., Java Spring Boot, Node.js Express, etc.)
 * A build tool (e.g., Maven, Gradle, npm whichever your team selected)
 * An IDE with backend technology support (e.g., IntelliJ IDEA, VS Code with Java extensions, etc.)
 * Access to a local or containerized database instance (a pre-configured Docker Compose
@@ -118,9 +118,9 @@ in Exercise 4.2 and cover the following scenarios:
 
 **Constitution alignment:** These unit tests run entirely without a database and
 without calling any AI service. All AI-related behaviour is out of scope for this
-exercise. 
+exercise.
 
-**Test class naming convention:** Follow the naming conventions of the tech 
+**Test class naming convention:** Follow the naming conventions of the tech
 stack you used. Check the official documentation of your backend technology
 to figure out the structure (e.g.,`<EntityName>Test.java` placed under
 `src/test/java` following the same package structure as the source, etc).
