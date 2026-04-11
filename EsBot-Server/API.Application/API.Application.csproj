@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>API.Application</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Validators\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" />
+    </ItemGroup>
+
+</Project>

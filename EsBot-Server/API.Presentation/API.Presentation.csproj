@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <RootNamespace>API.Presentation</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+        <PackageReference Include="Scalar.AspNetCore" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Extensions\" />
+      <Folder Include="Middlewares\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\API.Application\API.Application.csproj" />
+      <ProjectReference Include="..\API.Infrastructure\API.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>
