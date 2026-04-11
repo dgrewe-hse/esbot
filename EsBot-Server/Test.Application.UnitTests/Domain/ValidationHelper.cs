@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Test.Domain.UnitTests;
+namespace Test.Application.UnitTests.Domain;
 
 public static class ValidationHelper
 {

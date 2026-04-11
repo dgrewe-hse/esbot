@@ -1,8 +1,7 @@
 using Domain.Entities;
-using FluentAssertions;
-using Xunit;
+using Test.Application.UnitTests.Domain;
 
-namespace Test.Domain.UnitTests;
+namespace Test.Application.UnitTests;
 
 public class MessageTests
 {

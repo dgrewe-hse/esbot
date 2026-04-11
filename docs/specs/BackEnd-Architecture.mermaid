@@ -1,0 +1,166 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#E1F5FE', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#fff'}}}%%
+graph TD
+    %%----------------------------------------------------------
+    %% SOLUTION DEFINITION
+    %%----------------------------------------------------------
+    subgraph Solution ["Project.sln (The entire software system)"]
+        direction TB
+
+        %%----------------------------------------------------------
+        %% LAYER 1: API (PRESENTATION)
+        %%----------------------------------------------------------
+        subgraph API ["Layer 1: API.Presenntation(Web API Project)"]
+            APIPROJ["Entry Point / Gateway"]
+            subgraph APIFolders ["Key Folders"]
+                direction TB
+                AC["/Controllers<br/>(Thin HTTP Endpoints)"]
+                AM["/Middlewares<br/>(Global Error/Log/Security)"]
+                AE["/Extensions<br/>(Keep Program.cs clean)"]
+                AP["/Properties<br/>(launchSettings.json)"]
+            end
+        end
+
+        %%----------------------------------------------------------
+        %% LAYER 2: INFRASTRUCTURE (TOOLS)
+        %%----------------------------------------------------------
+        subgraph INF ["Layer 2: API.Infrastructure (Class Library)"]
+            INFPROJ["External Dependencies Implementation"]
+            subgraph INFFolders ["Key Folders"]
+                direction TB
+                IPC["/Persistence/Context<br/>(DbContext & DB Config)"]
+                IPR["/Persistence/Repositories<br/>(EF Core Implementations)"]
+                ISE["/Services/External<br/>(Email, Stripe, etc.)"]
+                IWR["/Wrappers<br/>(Isolate 3rd-Party Libs)"]
+            end
+        end
+
+        %%----------------------------------------------------------
+        %% LAYER 3: APPLICATION (BRAINS)
+        %%----------------------------------------------------------
+        subgraph APP ["Layer 3: API.Application (Class Library)"]
+            APPPROJ["Business Logic / Use Cases"]
+            subgraph APPFolders ["Key Folders"]
+                direction TB
+                AI["/Interfaces<br/>(Service & Tool Abstractions)"]
+                AS["/Services<br/>(The Core Logic Handlers)"]
+                AD["/DTOs<br/>(Input/Output Data Objects)"]
+                AMP["/Mappings<br/>(Entity <-> DTO Profiles)"]
+                AV["/Validators<br/>(Input Data Rules)"]
+            end
+        end
+
+        %%----------------------------------------------------------
+        %% LAYER 4: DOMAIN (CORE)
+        %%----------------------------------------------------------
+        subgraph DOM ["Layer 4: MyApi.Domain (Class Library)"]
+            DOMPROJ["Fundamental Objects / Rules"]
+            subgraph DOMFolders ["Key Folders"]
+                direction TB
+                DE["/Entities<br/>(Database Models/Entities)"]
+                DC["/Common<br/>(Shared Base Classes)"]
+                DEX["/Exceptions<br/>(Domain Custom Errors)"]
+                DI["/Interfaces<br/>(Data Access Absractions)"]
+            end
+        end
+
+        %%----------------------------------------------------------
+        %% TEST PROJECTS
+        %%----------------------------------------------------------
+        subgraph TESTS ["Testing Suite (/tests)"]
+            direction LR
+            
+            subgraph FUNC ["Functional Tests"]
+                User["A Humon User"]
+                TF["Tests.Functional<br/>(WebApplicationFactory)"]
+            end
+            
+            subgraph INT ["Integration Tests"]
+                TI["Tests.Integration<br/>(Repositories/DB)"]
+            end
+            
+            subgraph UNIT ["Unit Tests"]
+                TU["Tests.Unit<br/>(Logic/Mapping)"]
+            end
+        end
+
+    end
+
+    %%----------------------------------------------------------
+    %% STRICT DEPENDENCY FLOW (CRUCIAL)
+    %%----------------------------------------------------------
+    %% Note: Thin dotted line is for DI Registration only.
+    %% Logical communication still flows API -> Application.
+    API ==> APP
+    API -. "DI Setup Only" .-> INF
+    
+    INF ==> APP
+    INF ==> DOM
+    
+    APP ==> DOM
+
+    %%----------------------------------------------------------
+    %% TEST DEPENDENCY FLOW
+    %%----------------------------------------------------------
+    %% Functional tests boot the whole app
+    TF -. "Tests entire" .-> API
+    TF -. "Fakes" .-> INF
+    User -. "Tests entire" .-> API
+
+    %% Integration tests target the plumbing
+    TI ==> INF
+    
+    %% Unit tests target logic
+    TU ==> APP
+    TU ==> DOM
+
+    %%----------------------------------------------------------
+    %% PROD DEPENDENCY FLOW
+    %%----------------------------------------------------------
+    API ==> APP
+    API -. "DI Only" .-> INF
+    INF ==> APP
+    INF ==> DOM
+    APP ==> DOM
+
+    %%----------------------------------------------------------
+    %% VISUAL EXPLANATION & LEGEND
+    %%----------------------------------------------------------
+    subgraph Legend ["<br/>HOW TO READ THIS DIAGRAM"]
+        L0["Dependency Flow: ==> Strict Project Reference<br/>The layers are isolated. Dependencies only point INWARD."]
+        L1["L1: API (Green): The Front Gate. Handles HTTP only. No logic."]
+        L2["INFRA (Blue): The Plumbing. Talks to Database, Cloud, Third-Party APIs."]
+        L3["APPL (Orange): The Brains. Coordinates the 'how' but not 'where' data lives."]
+        L4["DOMAIN (Yellow): The Heart. Rules & Entities that NEVER change based on tools."]
+    end
+
+    %%----------------------------------------------------------
+    %% STYLING
+    %%----------------------------------------------------------
+    classDef project fill:#fff,stroke:#333,stroke-width:2px,rx:5,ry:5,color:black,font-weight:bold;
+    classDef folder fill:#F5F5F5,stroke:#777,stroke-width:1px,stroke-dasharray: 5 5,rx:3,ry:3,color:black,font-size:11px;
+    classDef layerBox fill:#fff,stroke-width:1.5px,rx:10,ry:10;
+
+    class APIPROJ,INFPROJ,APPPROJ,DOMPROJ project;
+    class AC,AM,AE,AP,IPC,IPR,ISE,IWR,AI,AS,AD,AMP,AV,DE,DC,DEX,DI folder;
+    
+    classDef greenLayer fill:#E8F5E9,stroke:#4CAF50,stroke-width:2px;
+    classDef blueLayer fill:#E3F2FD,stroke:#2196F3,stroke-width:2px;
+    classDef orangeLayer fill:#FFF3E0,stroke:#FF9800,stroke-width:2px;
+    classDef yellowLayer fill:#FFFDE7,stroke:#FBC02D,stroke-width:2px;
+    classDef funcStyle fill:#E1BEE7,stroke:#9C27B0,stroke-width:2px;
+    classDef intStyle fill:#C8E6C9,stroke:#4CAF50,stroke-width:2px;
+    classDef unitStyle fill:#FFF9C4,stroke:#FBC02D,stroke-width:2px;
+
+    
+    class API greenLayer;
+    class INF blueLayer;
+    class APP orangeLayer;
+    class DOM yellowLayer;
+    class TF funcStyle;
+    class TI intStyle;
+    class TU unitStyle;
+
+    class L1 fill:#E8F5E9,color:black,font-weight:normal;
+    class L2 fill:#E3F2FD,color:black,font-weight:normal;
+    class L3 fill:#FFF3E0,color:black,font-weight:normal;
+    class L4 fill:#FFFDE7,color:black,font-weight:normal;

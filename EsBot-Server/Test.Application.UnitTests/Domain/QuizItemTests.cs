@@ -1,9 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Domain.Entities;
-using FluentAssertions;
-using Xunit;
 
-namespace Test.Domain.UnitTests;
+namespace Test.Application.UnitTests.Domain;
 
 public class QuizItemTests
 {

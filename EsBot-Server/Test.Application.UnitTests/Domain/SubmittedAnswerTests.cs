@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using DataBaseModels;
 using Domain.Entities;
 
-namespace Test.Domain.UnitTests;
+namespace Test.Application.UnitTests.Domain;
 
 public class SubmittedAnswerTests
 {
