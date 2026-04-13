@@ -1,0 +1,14 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Jan Schröter</Authors>
+    <Company>Omega</Company>
+    <Copyright>Copyright © 2026</Copyright>
+  </PropertyGroup>
+</Project>
