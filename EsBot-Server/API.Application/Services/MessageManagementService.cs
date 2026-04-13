@@ -31,10 +31,9 @@ public class MessageManagementService : IMessageManagementService
         var message = await _messageRepository.GetByIdAsync(id);
         return _mapper.Map<MessageResponse>(message);
     }
-
     public async Task<AllMessagesResponse> GetAllAsync()
     {
-        var message = await _messageRepository.GetAll();
-        return _mapper.Map<AllMessagesResponse>(message);
+        var messages = await _messageRepository.GetAll();
+        return _mapper.Map<AllMessagesResponse>(messages);
     }
 }

@@ -15,7 +15,7 @@ public class MessagesMappingProfile : Profile
             .ForMember(dest => dest.Timestamp, opt => opt.MapFrom(src =>DateTime.UtcNow));
         CreateMap<IEnumerable<Message>, AllMessagesResponse>()
             .ForMember(dest => dest.AllMessages, 
-                opt => opt.MapFrom(src => src.Select(m => m.Content).ToArray()));
+                opt => opt.MapFrom(src => src));
         
     }
 }

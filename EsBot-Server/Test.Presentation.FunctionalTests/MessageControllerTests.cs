@@ -1,4 +1,6 @@
 ﻿using System.Net;
+using System.Net.Http.Json;
+using API.Application.DTOs.Responses;
 using API.Infrastructure.Persistence.Context;
 using Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,5 +45,9 @@ public class MessageControllerTests : IClassFixture<ApiFactory>
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Equal("application/json; charset=utf-8", 
             response.Content.Headers.ContentType?.ToString());
+        var messages = await response.Content.ReadFromJsonAsync<AllMessagesResponse>();
+
+        Assert.NotNull(messages);
+        Assert.Contains(messages.AllMessages[0].Content,"John Doe");
     }
 }
