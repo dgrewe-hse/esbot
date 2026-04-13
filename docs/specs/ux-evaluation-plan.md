@@ -2,15 +2,15 @@
 
 ### 1. Evaluation Scope
 * **UX Factors to Test**:
-    * **Clarity / Comprehensibility**: Can users find the prompt bar and navigate without friction?
-    * **Feedback Quality**: Is the AI's content pedagogically sound and accurate?
-    * **Usability**: Are all functional features accessible without unnecessary redirects?
-    * **Efficiency**: Can users complete tasks quickly via quick actions/chips?
-    * **Trustability / Transparency**: Does the AI properly explain its reasoning or cite sources?
+  * **Clarity / Comprehensibility**: Can users find the prompt bar and navigate without friction?
+  * **Feedback Quality**: Is the AI's content pedagogically sound and accurate?
+  * **Usability**: Are all functional features accessible without unnecessary redirects?
+  * **Efficiency**: Can users complete tasks quickly via quick actions/chips?
+  * **Trustability / Transparency**: Does the AI properly explain its reasoning or cite sources?
 * **User Journeys to Evaluate**:
-    * *Journey A*: Asking a learning question and understanding the AI response.
-    * *Journey B*: Requesting, completing, and reviewing a generated practice quiz.
-    * *Journey C*: Returning to the app to find and review previous chat history.
+  * *Journey A*: Asking a learning question and understanding the AI response.
+  * *Journey B*: Requesting, completing, and reviewing a generated practice quiz.
+  * *Journey C*: Returning to the app to find and review previous chat history.
 
 ### 2. Method Set
 To balance deep user insights with fast execution, we will use a hybrid approach of expert evaluation and user testing:
@@ -24,9 +24,9 @@ Since computer science students are the target audience and are highly critical 
 * **Participants**: ≥5 CS students not involved in the project development (as 5 users typically find 80% of usability issues).
 * **Duration**: 30 minutes per session (15 mins testing + 15 mins post-test interview).
 * **Materials**:
-    * A running test instance of the full ESBot Application.
-    * A set of 3 written task scenarios (e.g., *"Ask ESBot to explain 'polymorphism' and see if it gives you an example"*).
-    * Screen and audio recording setup (consent required).
+  * A running test instance of the full ESBot Application.
+  * A set of 3 written task scenarios (e.g., *"Ask ESBot to explain 'polymorphism' and see if it gives you an example"*).
+  * Screen and audio recording setup (consent required).
 
 ### 4. Metrics and Acceptance Criteria
 Aligned with the ISO/IEC 25010-based quality requirements and the ESBot Constitution's performance expectations:
@@ -59,8 +59,8 @@ All UX issues found during Heuristic and Think-Aloud evaluations will be logged 
 ### 6. Quality Gate Proposal (UX Release Blocker)
 To uphold the **Comprehensive Testing** and **Learning-Centered Design** principles of the ESBot Constitution, UX evaluation findings will act as a strict quality gate:
 
-1.  **Zero Critical/High UX Issues**: No release to staging or production may occur if there are open Critical or High severity UX issues.
-2.  **Metric Compliance**: If the "Time to First Prompt" exceeds 30 seconds or the AI fails to provide reasoning/sources in ≥ 90% of sampled responses, the release is blocked.
-3.  **Exception Handling**: If a fallback response (due to LLM timeout) fails to instruct the user on what to do next (violating the Graceful AI Degradation principle), it is treated as a High severity issue.
+1. **Zero Critical/High UX Issues**: No release to staging or production may occur if there are open Critical or High severity UX issues.
+2. **Metric Compliance**: If the "Time to First Prompt" exceeds 30 seconds or the AI fails to provide reasoning/sources in ≥ 90% of sampled responses, the release is blocked.
+3. **Exception Handling**: If a fallback response (due to LLM timeout) fails to instruct the user on what to do next (violating the Graceful AI Degradation principle), it is treated as a High severity issue.
 
 `Grammtic, translation and text structure improvements with ChatGPT Version 5.3 (03.04.2026 12:20)`

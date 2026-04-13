@@ -1,5 +1,5 @@
 # UX (Experience) Factors
-## 1 Clartity/Comprehensibility 
+## 1 Clartity/Comprehensibility
 ### Definition
 Clarity and comprehensibility mean that the user can operate the chatbot using only their existing skills, without needing to learn new conventions specifically for the tool. All buttons and functions should behave as expected, their labels should be precise and intuitive, and the interface should provide clear visual feedback when actions are performed.
 
@@ -50,11 +50,11 @@ Trust and transparency of AI responses are important for ESBot users because the
 ### Example
 A CS student asks ESBot to explain a machine learning concept for a report. ESBot provides a concise explanation and includes references to textbooks or research papers. Because the sources are given, the student can verify the information and properly cite it in their assignment, ensuring academic integrity.
 
-## Excluded:
+## Excluded
 - Customization: not so relevant
 - Identität: Not a sozial App
 - Socials: The App is not to socialize but for unpublic self improvment. There are no social features plannend
-- Novelties 
+- Novelties
 
 Team Thougts:
 Many Points from the PDF are subpoints or very simular to other Points in the PDF
