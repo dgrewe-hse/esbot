@@ -7,22 +7,22 @@
         "version": "20",
         "nodeGypDependencies": true,
         "installYarnUsingApt": false
-      },
-      "ghcr.io/devcontainers/features/java:1": {
-        "version": "17"
       }
-    },  
-  
+    },
+
     "customizations": {
       "vscode": {
         "extensions": [
-          "vscjava.vscode-java-pack",
+          "ms-python.python",
+          "ms-python.vscode-pylance",
+          "ms-python.debugpy",
           "vue.volar",
           "dbaeumer.vscode-eslint",
           "esbenp.prettier-vscode"
         ],
         "settings": {
-          "java.configuration.updateBuildConfiguration": "automatic"
+          "python.defaultInterpreterPath": "/usr/local/bin/python",
+          "python.languageServer": "Pylance"
         }
       }
     },

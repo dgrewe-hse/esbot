@@ -40,8 +40,34 @@ Submissions for each exercise shall be organized in the `docs` folder.
 - Performance & Load Testing
 - Automated UI Testing
 
+### Backend (Exercise 4.1)
+
+The backend is implemented in Python with FastAPI and PostgreSQL. A full setup guide is available in [`docs/setup.md`](docs/setup.md).
+
+**Quick start:**
+
+```bash
+# Abhängigkeiten installieren
+cd backend && uv sync --all-groups
+
+# PostgreSQL starten (Docker)
+docker compose -f .devcontainer/docker-compose.yml up db -d
+
+# Umgebungsvariablen setzen
+cp backend/.env.example backend/.env
+
+# Tests ausführen (kein laufendes PostgreSQL nötig)
+cd backend && uv run pytest -v
+
+# Server starten
+cd backend && uv run uvicorn app.main:app --reload
+```
+
+API läuft unter `http://localhost:8000` · Swagger-Doku: `http://localhost:8000/docs`
+
 ### Documentation
 - Project concept and expectations: [`docs/esbot.md`](docs/esbot.md)
+- Backend setup and environment: [`docs/setup.md`](docs/setup.md)
 - All lab deliverables and write-ups: `docs/`
 
 ### Notes
