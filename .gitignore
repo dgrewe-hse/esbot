@@ -65,3 +65,19 @@ $RECYCLE.BIN/
 
 # NFS files
 .nfs*
+backend/.env
+.vscode/settings.json
+.coverage
+backend/app/__pycache__/__init__.cpython-312.pyc
+backend/app/__pycache__/config.cpython-312.pyc
+backend/app/__pycache__/database.cpython-312.pyc
+backend/app/__pycache__/main.cpython-312.pyc
+backend/app/models/__pycache__/evaluation_result.cpython-312.pyc
+backend/app/models/__pycache__/message.cpython-312.pyc
+backend/app/models/__pycache__/quiz_item.cpython-312.pyc
+backend/app/models/__pycache__/quiz_request.cpython-312.pyc
+backend/app/models/__pycache__/submitted_answer.cpython-312.pyc
+backend/app/models/__pycache__/user_session.cpython-312.pyc
+backend/tests/__pycache__/__init__.cpython-312.pyc
+backend/tests/__pycache__/conftest.cpython-312-pytest-9.0.3.pyc
+backend/tests/__pycache__/test_smoke.cpython-312-pytest-9.0.3.pyc
