@@ -9,7 +9,7 @@ namespace Core.Services;
 
 public class QuestionManagementService(
     IMapper mapper,
-    IQuestionRepository questionRepository,
+    IMessageRepository messageRepository,
     ILlmInterface llmInterface)
     : IQuestionManagementService
 {
@@ -17,18 +17,13 @@ public class QuestionManagementService(
     public async Task<MessageResponse> AskQuestion(QuestionRequest question)
     {
         var message = mapper.Map<Message>(question);
-        await questionRepository.AddMessage(message);
+        await messageRepository.AddMessage(message);
         var answer = await llmInterface.Ask(message.Content);
 
         var answerMessage = mapper.Map<Message>(answer);
         answerMessage.UserSessionId = message.UserSessionId;
-        await questionRepository.AddMessage(answerMessage);
+        await messageRepository.AddMessage(answerMessage);
         
         return mapper.Map<MessageResponse>(answerMessage);
-    }
-
-    public Task<IEnumerable<MessageResponse>> GetQuestionsBySessionId(Guid seesionId)
-    {
-        throw new NotImplementedException();
     }
 }

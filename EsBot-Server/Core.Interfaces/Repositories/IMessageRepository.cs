@@ -2,7 +2,7 @@ using Core.Data.Entities;
 
 namespace Core.Interfaces.Repositories;
 
-public interface IQuestionRepository
+public interface IMessageRepository
 {
     public Task AddMessage(Message message);
 

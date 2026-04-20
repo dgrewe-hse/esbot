@@ -6,6 +6,4 @@ namespace Core.Interfaces.Services;
 public interface IQuestionManagementService
 {
     Task<MessageResponse> AskQuestion(QuestionRequest question);
-    
-    Task<IEnumerable<MessageResponse>> GetQuestionsBySessionId(Guid seesionId);
 }

@@ -17,7 +17,7 @@ public static class InfrastructureDependencyInjection
     {
         public IServiceCollection AddInfrastructureServices()
         {
-            services.AddScoped<IQuestionRepository, QuestionRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<ILlmInterface, LlmInterface>();
             services.AddScoped<IQuizRepository, QuizRepository>();
             return services;

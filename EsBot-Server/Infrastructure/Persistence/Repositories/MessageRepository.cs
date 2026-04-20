@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories;
 
-public class QuestionRepository: IQuestionRepository
+public class MessageRepository: IMessageRepository
 {
     private readonly ApplicationDbContext _context;
 
-    public QuestionRepository(ApplicationDbContext context)
+    public MessageRepository(ApplicationDbContext context)
     {
         _context = context;
     }
@@ -20,8 +20,8 @@ public class QuestionRepository: IQuestionRepository
         await _context.SaveChangesAsync();
     }
 
-    public Task<IEnumerable<Message>> GetBySessionIdAsync(Guid id)
+    public async Task<IEnumerable<Message>> GetBySessionIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _context.Messages.Where(m => m.UserSessionId == id).ToListAsync();
     }
 }

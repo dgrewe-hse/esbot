@@ -17,21 +17,21 @@ namespace Test.Presentation.FunctionalTests.Features
     
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "3.0.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class ResumeExistingLearningSesssionBenniFeature : object, global::Xunit.IClassFixture<ResumeExistingLearningSesssionBenniFeature.FixtureData>, global::Xunit.IAsyncLifetime
+    public partial class ResumeExistingLearningSessionBenniFeature : object, global::Xunit.IClassFixture<ResumeExistingLearningSessionBenniFeature.FixtureData>, global::Xunit.IAsyncLifetime
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Resume existing learning sesssion Benni", null, global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Resume existing learning session Benni", null, global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
         
         private global::Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
 #line 1 "ResumeExistingLearningSession.feature"
 #line hidden
         
-        public ResumeExistingLearningSesssionBenniFeature(ResumeExistingLearningSesssionBenniFeature.FixtureData fixtureData, global::Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public ResumeExistingLearningSessionBenniFeature(ResumeExistingLearningSessionBenniFeature.FixtureData fixtureData, global::Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
         }
@@ -134,7 +134,7 @@ namespace Test.Presentation.FunctionalTests.Features
         }
         
         [global::Xunit.SkippableFactAttribute(DisplayName="Student wants to resume session")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Resume existing learning sesssion Benni")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Resume existing learning session Benni")]
         [global::Xunit.TraitAttribute("Description", "Student wants to resume session")]
         public async global::System.Threading.Tasks.Task StudentWantsToResumeSession()
         {
@@ -158,7 +158,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
     await testRunner.GivenAsync("the API is running", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 5
-    await testRunner.WhenAsync("the student requests an old sesssion with session-id \"session-id\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.WhenAsync("the student requests an old session with session-id \"session-id\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 6
     await testRunner.ThenAsync("the response should contain all messages with that session-id \"session-id\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -168,7 +168,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
         }
         
         [global::Xunit.SkippableFactAttribute(DisplayName="Student want to resume a session which does not exist")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Resume existing learning sesssion Benni")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Resume existing learning session Benni")]
         [global::Xunit.TraitAttribute("Description", "Student want to resume a session which does not exist")]
         public async global::System.Threading.Tasks.Task StudentWantToResumeASessionWhichDoesNotExist()
         {
@@ -192,13 +192,13 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
     await testRunner.GivenAsync("the API is running", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 10
-    await testRunner.WhenAsync("the studen request an session with a unkown session-id \"session-id\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.WhenAsync("the student request an session with a unknown session-id \"session-id\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 11
-    await testRunner.ThenAsync("the respose status should be 404", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+    await testRunner.ThenAsync("the response status should be 404", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 12
-    await testRunner.ThenAsync("the response shoudl containt \"did not find your sesssion\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+    await testRunner.ThenAsync("the response should contain \"did not find your session\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -211,12 +211,12 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             
             async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.InitializeAsync()
             {
-                await ResumeExistingLearningSesssionBenniFeature.FeatureSetupAsync();
+                await ResumeExistingLearningSessionBenniFeature.FeatureSetupAsync();
             }
             
             async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.DisposeAsync()
             {
-                await ResumeExistingLearningSesssionBenniFeature.FeatureTearDownAsync();
+                await ResumeExistingLearningSessionBenniFeature.FeatureTearDownAsync();
             }
         }
     }

@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Core.Data\Core.Data.csproj" />
+      <ProjectReference Include="..\Core.Exceptions\Core.Exceptions.csproj" />
       <ProjectReference Include="..\Core.Interfaces\Core.Interfaces.csproj" />
     </ItemGroup>
 
