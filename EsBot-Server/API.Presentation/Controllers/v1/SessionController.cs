@@ -19,8 +19,8 @@ public class SessionController : ControllerBase
     }
 
     
-    [HttpGet("{sessionId:guid}")]
-    public async Task<ActionResult<IEnumerable<MessageResponse>>> OldSession(Guid sessionId)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<MessageResponse>>> OldSession([FromQuery] Guid sessionId)
     {
         IEnumerable<MessageResponse> result = null;
         try

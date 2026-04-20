@@ -15,14 +15,14 @@ public class ResumeSession
     private readonly TestContext _context;
     private readonly ApiFactory _factory;
 
-    public ResumeSession(HttpClient client, TestContext context, ApiFactory factory)
+    public ResumeSession(TestContext context, ApiFactory factory)
     {
-        _client = client;
+        _client = factory.CreateClient();
         _context = context;
         _factory = factory;
     }
     
-    [Given(@"the database is seeded with messsages")]
+    [Given(@"the database is seeded with messages")]
     public async Task SeedJavaQuestions()
     {
         var sessionId = Guid.NewGuid();
@@ -42,7 +42,7 @@ public class ResumeSession
     [When(@"the student requests an old session with session-id")]
     public async Task WhenTheStudentRequestsAnOldSessionWithSessionId()
     {
-        var response = await _client.GetAsync($"API/v1/Session?id={_context.SessionId}");
+        var response = await _client.GetAsync($"API/v1/Session?sessionId={_context.SessionId}");
         
         _context.Response = response;
         _context.ResponseContent = await response.Content.ReadAsStringAsync();
@@ -51,20 +51,33 @@ public class ResumeSession
     [Then(@"the response should contain all messages with that session-id")]
     public void ThenTheResponseShouldContainAllMessagesWithThatSessionId()
     {
-        var message = JsonSerializer.Deserialize<IEnumerable<MessageResponse>>(
-            _context.ResponseContent,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        var messages = Deserialize<IEnumerable<MessageResponse>>(_context.ResponseContent);
+        
+        messages.Should().NotBeNull();
+        messages.Should().HaveCount(3);
+        foreach (var message in messages)
+        {
+            message.UserSessionId.Should().Be(_context.SessionId);
+        }
     }
     
     [When(@"the student request an session with a unknown session-id")]
     public async Task WhenTheStudentRequestAnSessionWithAUnknownSessionId()
     {
+        var userSessionId = Guid.NewGuid();
+        var response = await _client.GetAsync($"API/v1/Session?id={userSessionId}");
         
+        _context.Response = response;
+        _context.ResponseContent = await response.Content.ReadAsStringAsync();
     }
 
-    [Then(@"the response should contain ""did not find your session""")]
-    public void ThenTheResponseShouldContainDidNotFindYourSession()
+    [Then(@"the response should contain ""(.*)""")]
+    public void ThenTheResponseShouldContainDidNotFindYourSession(string expectedMessage)
     {
-        
+        _context.ResponseContent.Should().Contain(expectedMessage);
     }
+    
+    private T Deserialize<T>(string content) => 
+        JsonSerializer.Deserialize<T>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+
 }
