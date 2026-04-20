@@ -1,0 +1,22 @@
+name: Project Integrity Gate
+
+on:
+  pull_request:
+    branches: ["main"]
+  push:
+    branches: ["main"]
+
+jobs:
+  run-security-script:
+    runs-on: docker
+    container:
+      image: node:alpine
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: apk add --no-cache grep bash coreutils
+
+      - name: Execute Integrity Script
+        run: bash ./scripts/ai-gate.sh
