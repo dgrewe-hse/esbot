@@ -9,11 +9,11 @@ from app.models.user_session import UserSession
 
 
 def _create_quiz_item(db_session):
-    """Erstellt die notwendige Eltern-Hierarchie und gibt ein persistiertes QuizItem zurück."""
+    # helper: builds the full parent chain so we have a saved QuizItem to work with
     session = UserSession()
     qr = QuizRequest(topic="Python", difficulty="easy")
     session.add_quiz_request(qr)
-    item = QuizItem(question="Frage?", correct_answer="Antwort")
+    item = QuizItem(question="Question?", correct_answer="Answer")
     qr.add_quiz_item(item)
     db_session.add(session)
     db_session.flush()
@@ -21,28 +21,26 @@ def _create_quiz_item(db_session):
 
 
 class TestSubmittedAnswerCreation:
-    """Prüft, ob ein SubmittedAnswer-Objekt korrekt erstellt werden kann."""
 
     def test_create_with_valid_data(self):
-        answer = SubmittedAnswer(answer="Meine Antwort")
-        assert answer.answer == "Meine Antwort"
+        answer = SubmittedAnswer(answer="My answer")
+        assert answer.answer == "My answer"
         assert answer.id is None
 
     def test_id_assigned_after_flush(self, db_session):
         item = _create_quiz_item(db_session)
-        answer = SubmittedAnswer(answer="Meine Antwort")
+        answer = SubmittedAnswer(answer="My answer")
         item.add_submitted_answer(answer)
         db_session.flush()
         assert answer.id is not None
         assert isinstance(answer.id, int)
 
     def test_evaluation_result_initially_none(self):
-        answer = SubmittedAnswer(answer="Meine Antwort")
+        answer = SubmittedAnswer(answer="My answer")
         assert answer.evaluation_result is None
 
 
 class TestSubmittedAnswerValidation:
-    """Prüft, dass fehlende Pflichtfelder beim Flush einen Fehler auslösen."""
 
     def test_null_answer_raises(self, db_session):
         item = _create_quiz_item(db_session)
@@ -52,18 +50,17 @@ class TestSubmittedAnswerValidation:
             db_session.flush()
 
     def test_null_quiz_item_id_raises(self, db_session):
-        answer = SubmittedAnswer(answer="Meine Antwort")
+        answer = SubmittedAnswer(answer="My answer")
         db_session.add(answer)
         with pytest.raises(IntegrityError):
             db_session.flush()
 
 
 class TestSubmittedAnswerRelationship:
-    """Prüft die bidirektionalen Beziehungen von SubmittedAnswer."""
 
     def test_quiz_item_backref(self, db_session):
         item = _create_quiz_item(db_session)
-        answer = SubmittedAnswer(answer="Meine Antwort")
+        answer = SubmittedAnswer(answer="My answer")
         item.add_submitted_answer(answer)
         db_session.flush()
 
@@ -72,7 +69,7 @@ class TestSubmittedAnswerRelationship:
 
     def test_answer_appears_in_quiz_item(self, db_session):
         item = _create_quiz_item(db_session)
-        answer = SubmittedAnswer(answer="Meine Antwort")
+        answer = SubmittedAnswer(answer="My answer")
         item.add_submitted_answer(answer)
         db_session.flush()
 
@@ -80,9 +77,9 @@ class TestSubmittedAnswerRelationship:
 
     def test_set_evaluation_bidirectional(self, db_session):
         item = _create_quiz_item(db_session)
-        answer = SubmittedAnswer(answer="Meine Antwort")
+        answer = SubmittedAnswer(answer="My answer")
         item.add_submitted_answer(answer)
-        evaluation = EvaluationResult(is_correct=True, feedback="Richtig!")
+        evaluation = EvaluationResult(is_correct=True, feedback="Correct!")
         answer.set_evaluation(evaluation)
         db_session.add(evaluation)
         db_session.flush()
@@ -92,9 +89,9 @@ class TestSubmittedAnswerRelationship:
 
     def test_cascade_delete_removes_evaluation(self, db_session):
         item = _create_quiz_item(db_session)
-        answer = SubmittedAnswer(answer="Meine Antwort")
+        answer = SubmittedAnswer(answer="My answer")
         item.add_submitted_answer(answer)
-        evaluation = EvaluationResult(is_correct=False, feedback="Falsch")
+        evaluation = EvaluationResult(is_correct=False, feedback="Wrong")
         answer.set_evaluation(evaluation)
         db_session.add(evaluation)
         db_session.flush()
@@ -107,16 +104,36 @@ class TestSubmittedAnswerRelationship:
 
 
 class TestSubmittedAnswerHelpers:
-    """Prüft die Helper-Methode set_evaluation."""
 
     def test_set_evaluation_sets_result(self):
-        answer = SubmittedAnswer(answer="Meine Antwort")
-        evaluation = EvaluationResult(is_correct=True, feedback="Richtig!")
+        answer = SubmittedAnswer(answer="My answer")
+        evaluation = EvaluationResult(is_correct=True, feedback="Correct!")
         answer.set_evaluation(evaluation)
         assert answer.evaluation_result is evaluation
 
     def test_set_evaluation_sets_back_reference(self):
-        answer = SubmittedAnswer(answer="Meine Antwort")
-        evaluation = EvaluationResult(is_correct=True, feedback="Richtig!")
+        answer = SubmittedAnswer(answer="My answer")
+        evaluation = EvaluationResult(is_correct=True, feedback="Correct!")
         answer.set_evaluation(evaluation)
         assert evaluation.submitted_answer is answer
+
+
+class TestSubmittedAnswerBoundaryValues:
+    # boundary values for the answer field
+    # empty string is technically allowed by the DB (it's not NULL)
+    # probably should be caught at the service level though
+
+    def test_empty_answer_accepted_by_db(self, db_session):
+        item = _create_quiz_item(db_session)
+        answer = SubmittedAnswer(answer="")
+        item.add_submitted_answer(answer)
+        db_session.flush()
+        assert answer.answer == ""
+
+    def test_very_long_answer_accepted(self, db_session):
+        item = _create_quiz_item(db_session)
+        long_answer = "B" * 5_000
+        answer = SubmittedAnswer(answer=long_answer)
+        item.add_submitted_answer(answer)
+        db_session.flush()
+        assert len(answer.answer) == 5_000

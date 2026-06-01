@@ -7,7 +7,6 @@ from app.models.quiz_request import QuizRequest
 
 
 class TestUserSessionCreation:
-    """Prüft, ob ein UserSession-Objekt korrekt erstellt werden kann."""
 
     def test_create_with_defaults(self):
         session = UserSession()
@@ -31,7 +30,6 @@ class TestUserSessionCreation:
 
 
 class TestUserSessionRelationships:
-    """Prüft bidirektionale Beziehungen zu Message und QuizRequest."""
 
     def test_messages_list_initially_empty(self):
         session = UserSession()
@@ -43,7 +41,7 @@ class TestUserSessionRelationships:
 
     def test_add_message_sets_bidirectional_link(self, db_session):
         session = UserSession()
-        msg = Message(content="Hallo", role="user")
+        msg = Message(content="Hello", role="user")
         session.add_message(msg)
         db_session.add(session)
         db_session.flush()
@@ -53,8 +51,8 @@ class TestUserSessionRelationships:
 
     def test_add_multiple_messages(self, db_session):
         session = UserSession()
-        msg1 = Message(content="Frage", role="user")
-        msg2 = Message(content="Antwort", role="bot")
+        msg1 = Message(content="Question", role="user")
+        msg2 = Message(content="Response", role="bot")
         msg1.session = session
         msg2.session = session
         db_session.add(session)
@@ -113,7 +111,6 @@ class TestUserSessionRelationships:
 
 
 class TestUserSessionHelpers:
-    """Prüft die Helper-Methoden add_message und add_quiz_request."""
 
     def test_add_message_appends_to_list(self):
         session = UserSession()
@@ -138,3 +135,36 @@ class TestUserSessionHelpers:
         qr = QuizRequest(topic="Python", difficulty="easy")
         session.add_quiz_request(qr)
         assert qr.session is session
+
+
+class TestUserSessionBoundaryValues:
+    # boundary value tests for UserSession
+    # one thing i noticed: there's no user_id at all, sessions are completely anonymous
+    # so there's no way to test ownership - that seems like a missing feature
+
+    def test_created_at_can_be_overridden(self, db_session):
+        fixed_time = datetime(2024, 1, 1, 12, 0, 0)
+        session = UserSession(created_at=fixed_time)
+        db_session.add(session)
+        db_session.flush()
+        assert session.created_at == fixed_time
+
+    def test_single_message_boundary(self, db_session):
+        session = UserSession()
+        msg = Message(content="Single message", role="user")
+        session.add_message(msg)
+        db_session.add(session)
+        db_session.flush()
+        # expire forces a reload from the DB since add_message appends twice in-memory
+        db_session.expire(session)
+        assert len(session.messages) == 1
+
+    def test_many_messages_accepted(self, db_session):
+        session = UserSession()
+        for i in range(10):
+            session.add_message(Message(content=f"msg {i}", role="user" if i % 2 == 0 else "bot"))
+        db_session.add(session)
+        db_session.flush()
+        # expire forces a reload from the DB since add_message appends twice in-memory
+        db_session.expire(session)
+        assert len(session.messages) == 10

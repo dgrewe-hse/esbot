@@ -7,7 +7,6 @@ from app.models.user_session import UserSession
 
 
 class TestQuizRequestCreation:
-    """Prüft, ob ein QuizRequest-Objekt korrekt erstellt werden kann."""
 
     def test_create_with_valid_data(self):
         qr = QuizRequest(topic="Python Basics", difficulty="easy")
@@ -38,7 +37,7 @@ class TestQuizRequestCreation:
 
 
 class TestQuizRequestValidation:
-    """Prüft, dass fehlende Pflichtfelder beim Flush einen Fehler auslösen."""
+    # all these should fail with IntegrityError on flush
 
     def test_null_topic_raises(self, db_session):
         session = UserSession()
@@ -64,7 +63,6 @@ class TestQuizRequestValidation:
 
 
 class TestQuizRequestRelationship:
-    """Prüft die bidirektionalen Beziehungen von QuizRequest."""
 
     def test_session_backref(self, db_session):
         session = UserSession()
@@ -89,7 +87,7 @@ class TestQuizRequestRelationship:
         session = UserSession()
         qr = QuizRequest(topic="Python", difficulty="easy")
         session.add_quiz_request(qr)
-        item = QuizItem(question="Was ist eine Liste?", correct_answer="Ein Datentyp")
+        item = QuizItem(question="What is a list?", correct_answer="A data type")
         qr.add_quiz_item(item)
         db_session.add(session)
         db_session.flush()
@@ -101,7 +99,7 @@ class TestQuizRequestRelationship:
         session = UserSession()
         qr = QuizRequest(topic="Python", difficulty="easy")
         session.add_quiz_request(qr)
-        item = QuizItem(question="Frage?", correct_answer="Antwort")
+        item = QuizItem(question="Question?", correct_answer="Answer")
         qr.add_quiz_item(item)
         db_session.add(session)
         db_session.flush()
@@ -114,16 +112,45 @@ class TestQuizRequestRelationship:
 
 
 class TestQuizRequestHelpers:
-    """Prüft die Helper-Methode add_quiz_item."""
 
     def test_add_quiz_item_appends_to_list(self):
         qr = QuizRequest(topic="Python", difficulty="easy")
-        item = QuizItem(question="Frage?", correct_answer="Antwort")
+        item = QuizItem(question="Question?", correct_answer="Answer")
         qr.add_quiz_item(item)
         assert item in qr.quiz_items
 
     def test_add_quiz_item_sets_request_reference(self):
         qr = QuizRequest(topic="Python", difficulty="easy")
-        item = QuizItem(question="Frage?", correct_answer="Antwort")
+        item = QuizItem(question="Question?", correct_answer="Answer")
         qr.add_quiz_item(item)
         assert item.quiz_request is qr
+
+
+class TestQuizRequestBoundaryValues:
+    # testing edge cases for topic and difficulty
+    # difficulty is a plain string column with no enum, so "super-hard" is accepted too
+
+    def test_empty_topic_accepted_by_db(self, db_session):
+        session = UserSession()
+        qr = QuizRequest(topic="", difficulty="easy")
+        session.add_quiz_request(qr)
+        db_session.add(session)
+        db_session.flush()
+        assert qr.topic == ""
+
+    def test_empty_difficulty_accepted_by_db(self, db_session):
+        session = UserSession()
+        qr = QuizRequest(topic="Python", difficulty="")
+        session.add_quiz_request(qr)
+        db_session.add(session)
+        db_session.flush()
+        assert qr.difficulty == ""
+
+    def test_invalid_difficulty_value_accepted_by_db(self, db_session):
+        # no validation on the column so anything passes
+        session = UserSession()
+        qr = QuizRequest(topic="Python", difficulty="super-hard")
+        session.add_quiz_request(qr)
+        db_session.add(session)
+        db_session.flush()
+        assert qr.difficulty == "super-hard"

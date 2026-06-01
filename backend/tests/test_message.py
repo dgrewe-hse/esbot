@@ -6,16 +6,15 @@ from app.models.user_session import UserSession
 
 
 class TestMessageCreation:
-    """Prüft, ob ein Message-Objekt korrekt erstellt werden kann."""
 
     def test_create_with_valid_data(self):
-        msg = Message(content="Hallo Welt", role="user")
-        assert msg.content == "Hallo Welt"
+        msg = Message(content="Hello World", role="user")
+        assert msg.content == "Hello World"
         assert msg.role == "user"
         assert msg.id is None
 
     def test_role_can_be_bot(self):
-        msg = Message(content="Antwort", role="bot")
+        msg = Message(content="Response", role="bot")
         assert msg.role == "bot"
 
     def test_created_at_default(self, db_session):
@@ -37,7 +36,6 @@ class TestMessageCreation:
 
 
 class TestMessageValidation:
-    """Prüft, dass fehlende Pflichtfelder beim Flush einen Fehler auslösen."""
 
     def test_null_content_raises(self, db_session):
         session = UserSession()
@@ -63,7 +61,6 @@ class TestMessageValidation:
 
 
 class TestMessageRelationship:
-    """Prüft die bidirektionale Beziehung zwischen Message und UserSession."""
 
     def test_session_backref(self, db_session):
         session = UserSession()
@@ -86,10 +83,50 @@ class TestMessageRelationship:
 
 
 class TestMessageHelpers:
-    """Prüft die Helper-Methode set_session."""
 
     def test_set_session_links_to_session(self):
         session = UserSession()
         msg = Message(content="test", role="user")
         msg.set_session(session)
         assert msg.session is session
+
+
+class TestMessageBoundaryValues:
+    # boundary value tests for content and role
+    # role has no enum constraint at DB level - any string gets stored
+    # so validation would have to happen in the service layer
+
+    def test_empty_content_accepted_by_db(self, db_session):
+        # empty string is not NULL, passes the NOT NULL check
+        session = UserSession()
+        msg = Message(content="", role="user")
+        session.add_message(msg)
+        db_session.add(session)
+        db_session.flush()
+        assert msg.content == ""
+
+    def test_empty_role_accepted_by_db(self, db_session):
+        session = UserSession()
+        msg = Message(content="test", role="")
+        session.add_message(msg)
+        db_session.add(session)
+        db_session.flush()
+        assert msg.role == ""
+
+    def test_invalid_role_value_accepted_by_db(self, db_session):
+        # no enum constraint on the column, so "admin" is saved without any error
+        session = UserSession()
+        msg = Message(content="test", role="admin")
+        session.add_message(msg)
+        db_session.add(session)
+        db_session.flush()
+        assert msg.role == "admin"
+
+    def test_very_long_content_accepted(self, db_session):
+        session = UserSession()
+        long_content = "A" * 10_000
+        msg = Message(content=long_content, role="user")
+        session.add_message(msg)
+        db_session.add(session)
+        db_session.flush()
+        assert len(msg.content) == 10_000
