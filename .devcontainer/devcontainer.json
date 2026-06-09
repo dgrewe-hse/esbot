@@ -34,7 +34,11 @@
       }
     },
 
-    "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && cd backend && uv sync --extra dev",
+    "postCreateCommand": "bash .devcontainer/scripts/post-create.sh",
+
+    "containerEnv": {
+      "JMETER_HOME": "/opt/apache-jmeter"
+    },
 
     "remoteUser": "root"
   }

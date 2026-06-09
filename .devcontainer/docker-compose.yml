@@ -12,6 +12,7 @@ services:
       DATABASE_URL: postgresql+psycopg://esbot_user:esbot_password@db:5432/esbot
       LLM_PROVIDER: mock
       OLLAMA_BASE_URL: http://host.docker.internal:11434
+      JMETER_HOME: /opt/apache-jmeter
     depends_on:
       - db
 
