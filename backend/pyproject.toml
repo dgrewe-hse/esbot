@@ -25,6 +25,7 @@ dev = [
     "schemathesis>=3.38.0",
     "pytest-benchmark>=5.1.0",
     "pip-audit>=2.7.0",
+    "locust>=2.32.0",
 ]
 
 [build-system]
