@@ -1,0 +1,7 @@
+# JMeter output
+jmeter/results/
+*.jtl
+
+# Gatling output
+gatling/target/
+gatling/results/

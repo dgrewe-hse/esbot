@@ -1,0 +1,173 @@
+openapi: 3.1.0
+info:
+  title: ESBot API
+  version: 0.1.0
+  description: OpenAPI reference for JMeter/Gatling performance test design.
+servers:
+  - url: http://localhost:8000
+    description: Local development
+paths:
+  /api/v1/health:
+    get:
+      summary: Health check
+      tags: [health]
+      responses:
+        "200":
+          description: Service is healthy
+  /api/v1/sessions:
+    post:
+      summary: Create learning session
+      tags: [sessions]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [user_id]
+              properties:
+                user_id:
+                  type: string
+                title:
+                  type: string
+      responses:
+        "201":
+          description: Session created
+    get:
+      summary: List sessions for a user
+      tags: [sessions]
+      parameters:
+        - name: user_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Session list
+  /api/v1/sessions/{session_id}:
+    get:
+      summary: Get session metadata
+      tags: [sessions]
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Session metadata
+        "404":
+          description: Session not found
+    delete:
+      summary: Delete session
+      tags: [sessions]
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Session deleted
+  /api/v1/sessions/{session_id}/messages:
+    post:
+      summary: Send chat message
+      tags: [messages]
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [content]
+              properties:
+                content:
+                  type: string
+      responses:
+        "201":
+          description: Message exchange
+        "404":
+          description: Session not found
+    get:
+      summary: Get message history
+      tags: [messages]
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Message history
+  /api/v1/sessions/{session_id}/quiz:
+    post:
+      summary: Generate quiz
+      tags: [quiz]
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [topic]
+              properties:
+                topic:
+                  type: string
+                count:
+                  type: integer
+                  minimum: 1
+                  maximum: 10
+      responses:
+        "201":
+          description: Quiz generated
+  /api/v1/sessions/{session_id}/quiz/{question_id}/answer:
+    post:
+      summary: Submit quiz answer
+      tags: [quiz]
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: question_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [answer]
+              properties:
+                answer:
+                  type: string
+      responses:
+        "200":
+          description: Evaluation result
