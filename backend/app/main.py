@@ -20,10 +20,24 @@ from app.core.exceptions import (
 from app.core.logging import setup_logging
 
 
+def _init_sqlite_schema() -> None:
+    """Create tables automatically when using SQLite (tests and performance runs)."""
+    settings = get_settings()
+    if not settings.database_url.startswith("sqlite"):
+        return
+
+    import app.db.models  # noqa: F401 — register ORM models with Base.metadata
+    from app.core.database import engine
+    from app.db.base import Base
+
+    Base.metadata.create_all(bind=engine)
+
+
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
     """Application lifespan handler for startup and shutdown."""
     setup_logging()
+    _init_sqlite_schema()
     yield
 
 
