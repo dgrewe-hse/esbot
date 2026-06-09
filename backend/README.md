@@ -22,3 +22,7 @@ uv run pytest -m "unit or integration" --cov=app --cov-report=term-missing
 ```
 
 See [docs/setup.md](docs/setup.md) for environment variables and Ollama configuration.
+
+## Performance testing
+
+JMeter and Gatling scenarios for load and stress testing live in [performance/](performance/README.md).

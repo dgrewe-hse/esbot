@@ -68,3 +68,11 @@ uv run pytest -m "unit or integration" --cov=app
 uv run pytest -m contract    # skipped by default
 uv run pytest -m performance # skipped by default
 ```
+
+## Performance, load & stress testing
+
+See [`performance/README.md`](../performance/README.md). Tests target **session/health endpoints only** (no real LLM). The perf script uses **in-memory SQLite** — no PostgreSQL required.
+
+```bash
+./performance/scripts/start-api-for-perf.sh
+```
