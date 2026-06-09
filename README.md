@@ -10,6 +10,10 @@
   <img alt="Made at HSE Esslingen" src="https://img.shields.io/badge/made%20at-HSE%20Esslingen-0a7ea4">
 </p>
 
+<p align="center">
+  <a href="https://github.com/dgrewe-hse/esbot/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/dgrewe-hse/esbot/actions/workflows/ci.yml/badge.svg"></a>
+</p>
+
 ## ESBot (HSE Esslingen Software Testing Course)
 
 > IMPORTANT: This repository is for educational purposes only. It may contain unfinished, faulty, or even non-executable code used solely for teaching during the Software Testing course. Do not use this repository for any production system.
@@ -40,8 +44,22 @@ Submissions for each exercise shall be organized in the `docs` folder.
 - Performance & Load Testing
 - Automated UI Testing
 
+### Backend (FastAPI)
+
+```bash
+cd backend
+uv sync --extra dev
+uv run alembic upgrade head
+uv run uvicorn app.main:app --reload --port 8000
+```
+
+See [`backend/docs/setup.md`](backend/docs/setup.md) for environment variables, Ollama integration, and testing.
+
 ### Documentation
 - Project concept and expectations: [`docs/esbot.md`](docs/esbot.md)
+- Backend setup: [`backend/docs/setup.md`](backend/docs/setup.md)
+- CI pipeline: [`docs/ci/pipeline.md`](docs/ci/pipeline.md)
+- Data model: [`docs/spec/data-model.md`](docs/spec/data-model.md)
 - All lab deliverables and write-ups: `docs/`
 
 ### Notes
