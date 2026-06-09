@@ -85,3 +85,12 @@ htmlcov/
 .pytest_cache/
 .ruff_cache/
 *.db
+
+########################
+# Performance test output
+########################
+backend/performance/jmeter/results/
+backend/performance/gatling/target/
+backend/performance/gatling/results/
+*.jtl
+backend/jmeter.log
