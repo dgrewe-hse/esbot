@@ -65,3 +65,23 @@ $RECYCLE.BIN/
 
 # NFS files
 .nfs*
+
+########################
+# Python / Backend
+########################
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+backend/.venv/
+backend/.env
+backend/*.egg-info/
+backend/dist/
+backend/build/
+.coverage
+backend/coverage.xml
+htmlcov/
+.pytest_cache/
+.ruff_cache/
+*.db
