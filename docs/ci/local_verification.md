@@ -104,3 +104,6 @@ No external services are required to:
 * Run tests
 * Run static analysis
 * Build the solution
+
+
+*Info: ChatGPT used to refine phrasing*
