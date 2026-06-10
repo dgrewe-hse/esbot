@@ -685,5 +685,9 @@ The CI pipeline executes the same commands. The only difference is that GitHub A
 Because the actual restore operation is unchanged, local and CI environments remain aligned. Any package-related issue that occurs locally can still be reproduced in CI, and vice versa. The cache acts only as a performance optimization and does not modify the build, test, or dependency resolution behavior.
 
 
+# Proof of successful CI pipeline run
+
+![successful pipeline run](../../assets/lab9_successful_workflow.png)
+
 
 *Info: ChatGPT used to refine phrasing*
