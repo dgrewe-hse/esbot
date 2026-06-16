@@ -46,6 +46,11 @@ uv run uvicorn app.main:app --reload --port 8000
 | `OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama API base URL |
 | `OLLAMA_MODEL` | `ollama/llama3.2` | LiteLLM model identifier |
 | `LOG_LEVEL` | `INFO` | Logging level |
+| `CORS_ORIGINS` | `http://localhost:5173,http://127.0.0.1:5173` | Comma-separated allowed browser origins (Vue dev server) |
+
+## Frontend integration
+
+The Vue frontend (`frontend/`) calls this API from the browser. Ensure `CORS_ORIGINS` includes your frontend URL (default covers Vite on port 5173). See [`frontend/README.md`](../../frontend/README.md).
 
 ## Using local Ollama (Llama 3.2)
 

@@ -55,6 +55,20 @@ uv run uvicorn app.main:app --reload --port 8000
 
 See [`backend/docs/setup.md`](backend/docs/setup.md) for environment variables, Ollama integration, and testing.
 
+### Frontend (Vue 3)
+
+```bash
+cd frontend
+npm install
+cp .env.example .env
+npm run dev
+```
+
+Open http://localhost:5173 (requires backend on port 8000). Testing guides:
+
+- [Manual UI testing](frontend/docs/ui-testing.md)
+- [Cypress E2E](frontend/docs/e2e/cypress.md) · [Playwright E2E](frontend/docs/e2e/playwright.md) · [Selenium E2E](frontend/docs/e2e/selenium.md)
+
 ### Documentation
 - Project concept and expectations: [`docs/esbot.md`](docs/esbot.md)
 - Backend setup: [`backend/docs/setup.md`](backend/docs/setup.md)

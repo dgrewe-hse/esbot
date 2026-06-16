@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+.env.local
+cypress/videos/
+cypress/screenshots/
+test-results/
+playwright-report/
+playwright/.cache/
