@@ -2,12 +2,12 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-JMETER_BIN="${JMETER_HOME:-/opt/apache-jmeter}/bin/jmeter"
+# shellcheck source=jmeter-env.sh
+source "${SCRIPT_DIR}/jmeter-env.sh"
 
-if ! command -v "${JMETER_BIN}" >/dev/null 2>&1 && command -v jmeter >/dev/null 2>&1; then
-  JMETER_BIN="jmeter"
-elif ! command -v "${JMETER_BIN}" >/dev/null 2>&1; then
+if ! JMETER_BIN="$(resolve_jmeter_bin)"; then
   echo "JMeter not found. Install Apache JMeter 5.6+ or set JMETER_HOME." >&2
+  echo "  Dev container: rebuild or run bash .devcontainer/scripts/install-jmeter.sh" >&2
   exit 1
 fi
 
@@ -16,6 +16,7 @@ RESULTS_DIR="${SCRIPT_DIR}/results/load-${TIMESTAMP}"
 mkdir -p "${RESULTS_DIR}"
 
 echo "Running ESBot JMeter load test -> ${RESULTS_DIR}"
+echo "  jmeter=${JMETER_BIN}"
 echo "Defaults: 50 users, 60s ramp, 300s duration (override via -Jload.threads=...)"
 
 "${JMETER_BIN}" -n \

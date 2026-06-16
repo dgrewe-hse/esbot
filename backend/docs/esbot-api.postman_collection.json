@@ -1,0 +1,178 @@
+{
+  "info": {
+    "name": "ESBot API",
+    "description": "Manual REST API tests for the ESBot learning assistant backend.\n\nImport into Postman or Talend API Tester (Chrome).\nStart the API first: see docs/api-testing.md",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000"
+    },
+    {
+      "key": "session_id",
+      "value": ""
+    },
+    {
+      "key": "question_id",
+      "value": ""
+    },
+    {
+      "key": "correct_answer",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "01 Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/health"
+      }
+    },
+    {
+      "name": "02 Create Session",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 201', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "const body = pm.response.json();",
+              "pm.collectionVariables.set('session_id', body.id);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": \"student-1\",\n  \"title\": \"Manual API Test Session\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/sessions"
+      }
+    },
+    {
+      "name": "03 List Sessions",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/sessions?user_id=student-1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "sessions"],
+          "query": [
+            {
+              "key": "user_id",
+              "value": "student-1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "04 Get Session",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/sessions/{{session_id}}"
+      }
+    },
+    {
+      "name": "05 Send Message",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"content\": \"What is integration testing?\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/sessions/{{session_id}}/messages"
+      }
+    },
+    {
+      "name": "06 Get Message History",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/sessions/{{session_id}}/messages"
+      }
+    },
+    {
+      "name": "07 Generate Quiz",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 201', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "const body = pm.response.json();",
+              "if (body.items && body.items.length > 0) {",
+              "    pm.collectionVariables.set('question_id', body.items[0].id);",
+              "    pm.collectionVariables.set('correct_answer', body.items[0].correct_answer);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"topic\": \"Software Testing\",\n  \"count\": 2\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/sessions/{{session_id}}/quiz"
+      }
+    },
+    {
+      "name": "08 Submit Quiz Answer",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"answer\": \"{{correct_answer}}\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/sessions/{{session_id}}/quiz/{{question_id}}/answer"
+      }
+    },
+    {
+      "name": "09 Delete Session",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/api/v1/sessions/{{session_id}}"
+      }
+    }
+  ]
+}

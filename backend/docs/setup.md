@@ -69,6 +69,10 @@ uv run pytest -m contract    # skipped by default
 uv run pytest -m performance # skipped by default
 ```
 
+## Manual API testing (Postman / Talend)
+
+To run the backend **without the dev container** and test endpoints manually, see [api-testing.md](api-testing.md). Import [`esbot-api.postman_collection.json`](esbot-api.postman_collection.json) into Postman or Talend API Tester.
+
 ## Performance, load & stress testing
 
 See [`performance/README.md`](../performance/README.md). Tests target **session/health endpoints only** (no real LLM). The perf script uses **in-memory SQLite** — no PostgreSQL required.
