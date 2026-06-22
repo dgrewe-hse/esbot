@@ -2,17 +2,21 @@ version: "3.9"
 
 services:
   app:
-    image: mcr.microsoft.com/devcontainers/java:1-17-bullseye
+    # Python 3.12 DevContainer-Image mit vorinstalliertem uv
+    image: mcr.microsoft.com/devcontainers/python:3.12
     container_name: esbot-backend-app
     working_dir: /workspace
     volumes:
       - ..:/workspace:cached
     command: sleep infinity
+    # Umgebungsvariablen für die FastAPI-App
+    # DATABASE_URL nutzt "db" als Hostname (Docker-Compose-Servicename)
     environment:
-      # Override datasource to use the db service hostname
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/esbot
-      SPRING_DATASOURCE_USERNAME: esbot_user
-      SPRING_DATASOURCE_PASSWORD: esbot_password
+      DATABASE_URL: postgresql://esbot_user:esbot_password@db:5432/esbot
+      APP_ENV: development
+    ports:
+      # FastAPI (uvicorn) läuft auf Port 8000
+      - "8000:8000"
     depends_on:
       - db
 

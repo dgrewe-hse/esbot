@@ -65,3 +65,16 @@ $RECYCLE.BIN/
 
 # NFS files
 .nfs*
+__pycache__/
+*.pyc
+.venv/
+backend/.env
+.vscode/settings.json
+.coverage
+
+
+# Local development files
+backend/esbot_ui.db
+backend/.venv/
+frontend/node_modules/
+.devcontainer/devcontainer-lock.json
